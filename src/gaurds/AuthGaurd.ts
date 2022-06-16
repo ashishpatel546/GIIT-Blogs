@@ -21,6 +21,7 @@ export class AuthGuard implements CanActivate {
     const decode = this.authService.verifyToken(tokenToDecode)
     const user = await this.authService.findUserByEmail(decode['email'])
     request.user = user;
+    // request.userEmail = decode['email']
     return true
     }
     catch(error){

@@ -1,11 +1,14 @@
 import { Body, Controller, Delete, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/decorators/currentUserDecorator';
+import { UserDto } from 'src/dtos/showUser.dto';
 import { UpdateUserDto } from 'src/dtos/update.user.dto';
 import { User } from 'src/entities/user.entity';
 import { AuthGuard } from 'src/gaurds/AuthGaurd';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { UserService } from './user.service';
 
+@Serialize(UserDto)
 @ApiTags('User')
 @UseGuards(AuthGuard)
 @Controller('user')

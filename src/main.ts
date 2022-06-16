@@ -6,6 +6,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   // const configService = app.get<ConfigService>(ConfigService);
   // const port = configService.get('SERVICE_PORT');
@@ -18,7 +19,7 @@ async function bootstrap() {
     .addBearerAuth(
       {
         description:
-          'Please add the token in following format : Bearer: <jwt_token>',
+          'Please add the token in following format : <jwt_token>',
         name: 'Authorization',
         bearerFormat: 'Bearer',
         scheme: 'Bearer',
@@ -32,7 +33,7 @@ async function bootstrap() {
   SwaggerModule.setup('swagger-api', app, document); 
   await app.listen(port, async() => {    
     Logger.verbose(`\n\t\t\t\t\t\tService successfully started on PORT: ${port}`)
-    Logger.debug(`\n\t\t\t SWAGGER-UI is accessible by a ctrl + click:\t ${await app.getUrl()}/swagger-api`)
+    Logger.debug(`\n\t\t\t SWAGGER-UI is accessible by ctrl + click:\t ${await app.getUrl()}/swagger-api`)
   });
   
 }
