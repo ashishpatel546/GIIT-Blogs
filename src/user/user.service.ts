@@ -17,8 +17,8 @@ export class UserService {
         @InjectRepository(User) private repo: Repository<User>
     ){}
 
-    find(){
-        return this.repo.find()
+    find(limit?: number){
+        return this.repo.find({take: limit })
     }
 
     async findByEmail(email:string){ 

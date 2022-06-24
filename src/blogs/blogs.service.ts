@@ -78,7 +78,7 @@ export class BlogsService {
   ) {
     return this.blogRepo.find({
       where: {
-        keys: In[keys.join(',')],
+        keys: In [keys.join(',')],
       },
       take: limit,
       order: { created_on: sorted_by == 'ASC' ? 'ASC' : 'DESC' },

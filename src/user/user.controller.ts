@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/decorators/currentUserDecorator';
 import { UserDto } from 'src/dtos/showUser.dto';
@@ -10,13 +10,18 @@ import { UserService } from './user.service';
 
 @Serialize(UserDto)
 @ApiTags('User')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard)    
 @Controller('user')
 @ApiBearerAuth('access-token')
 export class UserController {
     constructor(
         private readonly userService: UserService
     ){}
+
+    @Get('/:limit')
+    getUsers(@Param('limit') limit: number){
+        return this.userService.find(limit)
+    }
 
     @Patch('/:id')
     updateUserById(@Param('id') id: string, @Body() body: UpdateUserDto, @CurrentUser() user: User){

@@ -2,6 +2,7 @@ import {
     BadRequestException,
     Injectable,
     NotFoundException,
+    UnauthorizedException,
   } from '@nestjs/common';
   import { sign, verify } from 'jsonwebtoken';
   import { UserData } from 'src/user/user.service';
@@ -69,9 +70,14 @@ import { Repository } from 'typeorm';
       return accessToken;
     }
   
-    verifyToken(token: string) {      
-      const decode = verify(token, process.env.AUTH_SECRET);
+    verifyToken(token: string) {     
+      try {
+        const decode = verify(token, process.env.AUTH_SECRET);
       return decode;
+      } catch (error) {
+        throw new UnauthorizedException('Token validation failed')
+      } 
+      
     }
 
     findUserByEmail(email: string){
