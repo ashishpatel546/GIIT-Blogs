@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 import { CreateUserDto } from 'src/dtos/create.user.dto';
 import { LoginDto } from 'src/dtos/login.dto';
 import { UserDto } from 'src/dtos/showUser.dto';
@@ -18,17 +19,9 @@ export class AuthController {
     }
 
     @Post('/login')
-    login(@Body() body:LoginDto){
-        return this.authService.signin(body)
-    }
-
-    @Post('/validate-token')
-    validateJwt(@Body() body:any)
-    {
-        const {token} = body
-        const decode = this.authService.verifyToken(token)
-        if(decode) return {tokenStatus: 'Valid'}
-        return {tokenStatus: 'In-Valid'}
+    async login(@Body() body:LoginDto, @Res({passthrough: true}) res: Response){
+        const resp = await this.authService.signin(body)
+        res.status(200).json(resp)
     }
 
 }
