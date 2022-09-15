@@ -18,6 +18,12 @@ export class UserController {
         private readonly userService: UserService
     ){}
 
+    @Get('/fetch/currentuser')
+    fetchUser(@CurrentUser() user:User){
+        
+        return this.userService.findByEmail(user.email)
+    } 
+
     @Get('/:limit')
     getUsers(@Param('limit') limit: number){
         return this.userService.find(limit)
@@ -43,5 +49,18 @@ export class UserController {
         return this.userService.deleteByEmail(email, user)
     }
 
+    // @Get('/finduser/:email')
+    // fetchUser(@Param('currentuser') email: string,){
+    //     return this.userService.findByEmail(email)
+    // } 
+    // }
+    
+    }
 
-}
+// }
+
+// currentUser(@CurrentUser() user:User){
+//     console.log(user);
+    
+//     return this.userService.currentUser(user);
+// }

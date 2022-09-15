@@ -23,7 +23,8 @@ export class UserService {
 
     async findByEmail(email:string){ 
              
-        return this.repo.findOne({where: {email: email}})
+             
+        return await this.repo.findOne({where: {email: email}})
     }
 
     async create(userData: UserData){
@@ -62,5 +63,11 @@ export class UserService {
         return this.repo.delete({email:email})
     }
 
+    async currentUser(user:User)
+    {
+        console.log(user);
+        
+        return await this.repo.findOne({where: {email: user.email}})
+    }
 
 }

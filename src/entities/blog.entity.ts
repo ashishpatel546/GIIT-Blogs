@@ -18,8 +18,11 @@ export class Blog{
     @Column()
     title: string
 
-    @Column()
+    @Column("longtext")
     description: string
+
+    @Column()
+    category: string
 
     @Column('json')
     urls: string[]

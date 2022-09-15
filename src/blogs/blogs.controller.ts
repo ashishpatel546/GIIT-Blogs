@@ -103,8 +103,25 @@ export class BlogsController {
     return this.blogService.findAllBlogs(limit, sorted_by);
   }
 
+  
+
+  @Get('/myblogs')
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard)
+  findByEmail(@CurrentUser() user: User) {
+    const resp=this.blogService.findBlogByEmail(user);
+    // console.log(resp);
+    return resp;
+    
+  }
+
   @Get('/:id')
   findByid(@Param('id') id: string) {
     return this.blogService.findBlogByid(id);
+  }
+
+  @Get('/category/:category')
+  findByCategory(@Param('category') category: string) {
+    return this.blogService.findBlogByCategory(category);
   }
 }

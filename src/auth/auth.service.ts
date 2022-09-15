@@ -90,4 +90,45 @@ export class AuthService {
   findUserByEmail(email: string) {
     return this.userRepo.findOne({ where: { email: email } });
   }
+
+  async changePassword(pw_old:string,pw_new1:string,pw_new2:string,user:User){
+    
+    
+   
+    
+    const storedPassword = user.password;
+
+    
+    const [salt, pass] = storedPassword.split('.');
+    const stringHashed = (await scrypt(
+      pw_old,
+      salt,
+      16,
+    )) as Buffer;
+
+    const hashedPass = `${salt}.${stringHashed.toString('hex')}`;
+     
+     
+    if (hashedPass !== storedPassword)
+      throw new BadRequestException('wrong password');
+    else {
+      if(pw_new1!==pw_new2)
+      throw new BadRequestException('Password did not match')
+      else
+      {
+        const userToUpdate = await this.userRepo.findOne({where: {email:user.email}})
+        const salt = randomBytes(16).toString('hex');
+        const hash = (await scrypt(pw_new2, salt, 16)) as Buffer;
+        const stringHashed = hash.toString('hex');
+        const newHashedPass = `${salt}.${stringHashed}`;
+        console.log(newHashedPass);
+        
+        Object.assign(userToUpdate, {password:newHashedPass});
+        return this.userRepo.save(userToUpdate)
+      }
+      
+    }
+   return user
+    
+  }
 }

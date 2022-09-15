@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import e from 'express';
 import { CreateBlogDto } from 'src/dtos/create.blog.dto';
 import { Blog } from 'src/entities/blog.entity';
 import { User } from 'src/entities/user.entity';
@@ -83,5 +84,32 @@ export class BlogsService {
       take: limit,
       order: { created_on: sorted_by == 'ASC' ? 'ASC' : 'DESC' },
     });
+  }
+
+  findBlogByEmail(user:User)
+  {
+   
+    
+     return this.blogRepo.find({
+      relations: { user: true },
+      where :{
+       user:{
+        
+         email:user.email
+       }
+      }
+     });
+  }
+
+  findBlogByCategory(category:string)
+  {
+    
+     return this.blogRepo.find({
+      relations: { user: true },
+      where :{
+          category:category
+       }
+      
+     });
   }
 }
