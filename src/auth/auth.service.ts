@@ -81,6 +81,8 @@ export class AuthService {
   verifyToken(token: string) {
     try {
       const decode = verify(token, process.env.AUTH_SECRET);
+      //console.log(decode);
+      
       return decode;
     } catch (error) {
       throw new UnauthorizedException('Token validation failed');

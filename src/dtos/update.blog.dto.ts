@@ -18,12 +18,12 @@ export class UpdateBlogDto{
 
     @ApiProperty()
     @IsOptional()
-    @IsArray()
-    keys: string[]
+    @IsString()
+    keys: string
 
     @ApiProperty()
     @IsOptional()
-    @IsArray()
-    urls: string[]
+    @IsString()
+    urls: string
 
 }

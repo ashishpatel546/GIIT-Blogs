@@ -18,21 +18,23 @@ export class Blog{
     @Column()
     title: string
 
-    @Column("longtext")
+    @Column("text")
     description: string
 
     @Column()
     category: string
 
-    @Column('json')
-    urls: string[]
+    @Column()
+    urls: string
 
-    @Column('json')
-    keys: string[]
+    @Column()
+    keys: string
 
     @ManyToOne(type=> User, user=>user.blogs, {cascade: true, eager: true})
     @JoinColumn()
     user: User
 
 
+    @Column({nullable:true,array:true})
+    liked_by: string
 }

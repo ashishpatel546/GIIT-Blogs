@@ -124,4 +124,39 @@ export class BlogsController {
   findByCategory(@Param('category') category: string) {
     return this.blogService.findBlogByCategory(category);
   }
+
+ 
+  @Patch('/like/:id')
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard)
+  likeBlog(
+    @Param('id') id: string,
+    @CurrentUser() user: User,
+  ) {
+    return this.blogService.likeBlog(id,user);
+  }
+
+  @Patch('/unlike/:id')
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard)
+  unlikeBlog(
+    @Param('id') id: string,
+    @CurrentUser() user: User,
+  ) {
+    return this.blogService.unlikeBlog(id,user);
+  }
+
+  @Get('/find/by-likes')
+  findByLikes()
+  {
+    return this.blogService.findByLikes();
+  }
+
+  @Get('/all/categories')
+  getAllCategories()
+  {
+    return this.blogService.findAllCategories()
+    }
 }
+
+

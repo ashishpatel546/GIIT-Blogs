@@ -15,7 +15,7 @@ import { BlogsModule } from './blogs/blogs.module';
       ignoreEnvFile: false,
     }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'postgres',
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
       username: process.env.DB_USER,
@@ -23,6 +23,7 @@ import { BlogsModule } from './blogs/blogs.module';
       database: process.env.DB_NAME,
       autoLoadEntities: true,
       synchronize: true,
+      //logging: true
     }),
     UserModule,
     AuthModule,

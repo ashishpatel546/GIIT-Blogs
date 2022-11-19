@@ -5,12 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Blog } from 'src/entities/blog.entity';
 import { User } from 'src/entities/user.entity';
 import { AuthModule } from 'src/auth/auth.module';
-import { AuthService } from 'src/auth/auth.service';
 import { UserModule } from 'src/user/user.module';
 import { CurrentUserMiddleware } from 'src/middlewares/current.user.middleware';
+import { Category } from 'src/entities/category.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Blog, User]), AuthModule, UserModule],
+  imports: [TypeOrmModule.forFeature([Blog, User,Category]), AuthModule, UserModule],
   providers: [BlogsService],
   controllers: [BlogsController]
 })

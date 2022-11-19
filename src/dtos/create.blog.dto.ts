@@ -15,11 +15,17 @@ export class CreateBlogDto{
     description: string
 
     @ApiProperty()
-    @IsArray()
-    keys: string[]
-
-    @ApiProperty({type: [String]})
+    @IsString()
     @IsOptional()
-    @IsArray()
-    urls: string[]
+    keys: string
+
+    @ApiProperty()
+    @IsString()
+    @IsOptional()
+    urls: string
+
+    @ApiProperty()
+    @IsString()
+    @IsNotEmpty()
+    category: string
 }
